@@ -1,0 +1,42 @@
+<mat-drawer-container class="example-container" autosize>
+    
+    
+    <mat-drawer #drawer class="example-sidenav" mode="side" >        
+        
+        
+            <a class="navbar-brand" href="#"><img src="../../../assets/logoU.JPG" width="120px" height="120PX" alt=""></a>  
+          
+            <mat-list role="list">
+                <mat-list-item role="listitem">Inscripción</mat-list-item>
+                <mat-list-item role="listitem">Consulta</mat-list-item>
+                <mat-list-item role="listitem">Salir</mat-list-item>
+            </mat-list>
+        
+    </mat-drawer>
+    
+    <!-- sidenav-->
+    <div class="example-sidenav-content">
+          
+        <!-- toolbar-->
+      
+        <p>
+            <mat-toolbar color="primary">
+              <mat-toolbar-row>
+                <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span>Administración Alumnos</span>
+                <span class="example-spacer"></span>                
+              </mat-toolbar-row>          
+             
+            </mat-toolbar>
+        </p>
+        <main>
+          <app-students></app-students>
+        </main>
+         
+      
+    </div>
+
+  </mat-drawer-container>
+  

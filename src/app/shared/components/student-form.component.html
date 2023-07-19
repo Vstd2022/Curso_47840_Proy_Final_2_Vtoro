@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Agrega alumno</h1>
+<div mat-dialog-content>
+   <form class="flex flex-column" [formGroup]="studentForm">
+
+    <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input [formControl]="firstNameControl" matInput placeholder="Placeholder">
+        <!--<mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+        <mat-hint *ngIf="firstNameControl.errors">Hint</mat-hint>            
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Apellido</mat-label>
+        <input [formControl]="lastNameControl" matInput placeholder="Placeholder">
+        <!--<mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+        <mat-hint *ngIf="lastNameControl.errors">Hint</mat-hint>
+    </mat-form-field> 
+    <mat-form-field appearance="fill">
+        <mat-label>Telefono</mat-label>
+        <input [formControl]="telephoneControl" matInput placeholder="Placeholder">
+        <!--<mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+        <mat-hint *ngIf="telephoneControl.errors">Hint</mat-hint>
+    </mat-form-field>  
+    <mat-form-field appearance="fill">
+        <mat-label>Correo</mat-label>
+        <input [formControl]="emailControl" matInput placeholder="Placeholder">
+        <!--<mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+        <mat-hint *ngIf="emailControl.errors">Hint</mat-hint>
+    </mat-form-field>         
+    <mat-form-field appearance="fill">
+        <mat-label>Curso</mat-label>
+        <input [formControl]="courseControl" matInput placeholder="Placeholder">
+       <!--<mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+        <mat-hint *ngIf="courseControl.errors">Hint</mat-hint>
+    </mat-form-field>
+   </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="studentForm.value" cdkFocusInitial>Guardar</button>
+    <button mat-button  (click)="close()">Cancelar</button>
+</div>
