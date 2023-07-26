@@ -1,10 +1,8 @@
 
-    <div >   
-        <p appResaltado >Lista de Alumnos</p>           
-    </div>
-    <button (click)="addStudent()" mat-flat-button color="primary" >Agregar Alumno</button>  
-    <div>
-           
+    
+    <button (click)="addStudent()" mat-flat-button color="primary" >Agregar Alumno </button>  
+        
+     <div>     
         <table mat-table [dataSource]="datastudents" >
              
             <ng-container matColumnDef="id">

@@ -6,12 +6,13 @@ import { StudentsComponent } from '../dashboard/Pages/students/students.componen
 import { RouterModule, Router } from '@angular/router';
 import { commonmaterialModule } from './modules/common-material.module';
 import { ResaltadoDirective } from '../dashboard/Pages/students/resaltado.directive';
+//import { CoursesComponent } from '../dashboard/Pages/courses/courses.component';
 
 @NgModule({
   declarations: [
     StudentDialogComponent,
     StudentsComponent,     
-    ResaltadoDirective
+    ResaltadoDirective,   
   ],
   imports: [
     CommonModule,    
@@ -21,7 +22,7 @@ import { ResaltadoDirective } from '../dashboard/Pages/students/resaltado.direct
   ],
   exports: [
     StudentDialogComponent,
-    StudentsComponent,    
+    StudentsComponent
   ]
 
 })

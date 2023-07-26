@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component,OnDestroy, OnInit } from '@angular/core';
 import { Student } from 'src/app/structdata/datastudents.model';
 import { MatDialog} from '@angular/material/dialog';
 import { StudentDialogComponent } from 'src/app/shared/components/student-form.component';
-
 
 
 
@@ -13,7 +12,7 @@ import { StudentDialogComponent } from 'src/app/shared/components/student-form.c
 })
 
 
-export class StudentsComponent {
+export class StudentsComponent  {
   datastudents:   Student[] = [
     new Student(100,'María','López','98500622','mlopez@gmail.com','Ingeniería'),
     new Student(200,'Manuel','Hernández','98485479','mhernandez@gmail.com','Pedagogía'),
@@ -56,5 +55,6 @@ export class StudentsComponent {
       }
     })
   }
+  
 
 }
