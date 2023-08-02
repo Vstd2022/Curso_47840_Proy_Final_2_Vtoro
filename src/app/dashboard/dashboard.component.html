@@ -4,44 +4,37 @@
     <mat-drawer #drawer class="example-sidenav" mode="side" >        
         
         
-            <a class="navbar-brand" href="#"><img src="../../../assets/logoU.JPG" width="120px" height="120PX" alt=""></a>  
-          
-            <mat-list >
+           
+            <mat-nav-list >
 
-              <a routerLink="courses" mat-list-item>Cursos</a>
+              <a routerLink="home" mat-list-item>Inicio</a>
               <a routerLink="students" mat-list-item>Alumnos</a>
+              <a routerLink="courses" mat-list-item>Cursos</a>
+              <a routerLink="classes" mat-list-item>Clases</a>              
+              <a routerLink="/access/login" mat-list-item>Cerrar sesion</a>
                                 
-                <!-- como yo le tenia-->
-                <!--<mat-list-item role="listitem">Consulta</mat-list-item>-->                
-
-                <!-- como lo usa el profe-->
-                <!--<a routerLink="products" mat-list-item>Productos</a>-->
-
-
-
-            </mat-list>
+              </mat-nav-list>
         
     </mat-drawer>
     
     <!-- sidenav-->
     <div class="example-sidenav-content">
           
-        <!-- toolbar-->
-      
-        <p>
+        <!-- toolbar-->     
+        
             <mat-toolbar color="primary">
               <mat-toolbar-row>
                 <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
                     <mat-icon>menu</mat-icon>
                 </button>
-                <span>Administración</span>
+                <span>App Universidad</span>
                 <span class="example-spacer"></span>                
               </mat-toolbar-row>          
              
             </mat-toolbar>
-        </p>
-        <main>
-          <app-students></app-students>
+        
+        <main class="p-3">
+          <router-outlet></router-outlet>
         </main>
          
       

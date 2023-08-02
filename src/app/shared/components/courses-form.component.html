@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Datos Cursos</h1>
+<div mat-dialog-content>
+   <form class="flex flex-column" [formGroup]="coursesForm">
+   
+    
+    <mat-form-field appearance="fill">
+        <mat-label>Nombre Curso</mat-label>               
+        <input formControlName="nameCourse" matInput type="text" name="nameCourse" />        
+        <mat-error *ngFor="let error of nameCourseControl.errors | keyvalue">
+          {{ error | controlErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Sede</mat-label>
+        <input formControlName="campusCourse" matInput type="text" name="campusCourse" />        
+        <mat-error *ngFor="let error of campusCourseControl.errors | keyvalue">
+          {{ error | controlErrorMessage }}
+        </mat-error>
+    </mat-form-field> 
+
+    <mat-form-field appearance="fill">
+        <mat-label>Estado curso</mat-label>    
+        <input formControlName="stateCourse" matInput type="text" name="stateCourse" />        
+        <mat-error *ngFor="let error of stateCourseControl.errors | keyvalue">
+          {{ error | controlErrorMessage }}
+        </mat-error>
+    </mat-form-field>  
+   
+   </form>
+</div>
+<div mat-dialog-actions>    
+    <button (click)="onSubmit()" type="submit" mat-button>Guardar</button>   
+    <button mat-button mat-dialog-close>Cancelar</button>
+</div>

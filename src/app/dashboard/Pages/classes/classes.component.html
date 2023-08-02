@@ -1,0 +1,49 @@
+
+<button (click)="onCreateClasses()" mat-flat-button color="primary" type="button">          
+    Agregar Clases
+</button>
+
+<div>     
+    <table mat-table [dataSource]="(classes | async) || []" class="mat-elevation-z8">
+        
+        <ng-container matColumnDef="id_Class">
+            <th mat-header-cell *matHeaderCellDef > Código </th>
+            <td mat-cell *matCellDef="let classes"> {{classes.id_Class}} </td>
+        </ng-container>  
+        <ng-container matColumnDef="NameClass">
+            <th mat-header-cell *matHeaderCellDef > Nombre </th>
+            <td mat-cell *matCellDef="let classes"> {{classes.NameClass}} </td>
+        </ng-container>
+        <ng-container matColumnDef="teacherClass">
+            <th mat-header-cell *matHeaderCellDef > Profesor </th>
+            <td mat-cell *matCellDef="let classes"> {{classes.teacherClass}} </td>
+        </ng-container>       
+        <ng-container matColumnDef="stateClass">
+            <th mat-header-cell *matHeaderCellDef  > Estado  </th>
+            <td mat-cell *matCellDef="let classes"> {{classes.stateClass}} </td>
+        </ng-container>  
+        
+        
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef > Editar </th>
+            <td mat-cell *matCellDef="let classes"> 
+                <button (click)="onEditClasses(classes.id_cour)" mat-icon-button color="primary">
+                    <mat-icon>edit</mat-icon> 
+                </button> 
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+            <td mat-cell *matCellDef="let classes"> 
+                <button (click)="onDeleteClasses(classes.id_Class)" mat-icon-button color="warn">
+                    <mat-icon>delete</mat-icon> 
+                </button> 
+            </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>  
+    </table>
+ 
+</div>
+      

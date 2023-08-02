@@ -1,8 +1,9 @@
-import { Component,OnDestroy, OnInit } from '@angular/core';
+import { Component,OnDestroy, EventEmitter, Input, Output } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Student } from 'src/app/structdata/datastudents.model';
 import { MatDialog} from '@angular/material/dialog';
 import { StudentDialogComponent } from 'src/app/shared/components/student-form.component';
-
+import { StudentService } from './students.service';
 
 
 @Component({
@@ -11,50 +12,73 @@ import { StudentDialogComponent } from 'src/app/shared/components/student-form.c
   styleUrls: ['./students.component.scss']
 })
 
+export class StudentsComponent implements OnDestroy {
+  public student: Observable<Student[]>;
+  public destroyed = new Subject<boolean>();
 
-export class StudentsComponent  {
-  datastudents:   Student[] = [
-    new Student(100,'María','López','98500622','mlopez@gmail.com','Ingeniería'),
-    new Student(200,'Manuel','Hernández','98485479','mhernandez@gmail.com','Pedagogía'),
-    new Student(300,'Javier','Toro','97632565','jtoro@hotmail.com','Contabilidad'),
-    new Student(400,'Gonzalo','Vargas','96487845','gvargas@empresa.co','Informática'),
-    new Student(500,'Jose','Aravena','98525855','jaravena@outlook.com','Auditoria'),
-  ]
-
-  displayedColumns = ['id','firstName','lastName','telephone','email','course','edit','delete']
- 
-  constructor(private readonly dialogService: MatDialog){}
-
-  addStudent() {
-    
-    const dialog = this.dialogService.open(StudentDialogComponent)
-
-    dialog.afterClosed().subscribe((value) => {
-      if (value){
-        const lastId = this.datastudents[this.datastudents.length - 1]?.id;        
-        this.datastudents = [...this.datastudents, new Student(lastId + 100, value.firstName, value.lastName,value.telephone,value.email,value.course)];
-      }
-    })
-
+  public loading = false;
+  constructor(private matDialog: MatDialog, private studentService: StudentService) {
+    this.studentService.loadStudent();
+    this.student = this.studentService.getStudent();
   }
 
-  removeStudent(student: Student) {
-    this.datastudents = this.datastudents.filter(
-      (stu) => stu.id !== student.id 
-    );
-  }
-
-  editStudent(student: Student) {
-    const dialog = this.dialogService.open(StudentDialogComponent, {
-      data: student,
-    })
-
-    dialog.afterClosed().subscribe((data) => {
-      if (data) {
-        this.datastudents = this.datastudents.map((stu) => stu.id === student.id ? { ...stu, ...data } : stu)
-      }
-    })
-  }
+  displayedColumns: string[] = ['id_Stu', 'firstNameStu', 'lastNameStu', 'telephoneStu','emailStu','courseStu','edit','delete'];
   
+  //@Input()
+  //dataSource: Student[] = [];
 
+  //@Output()
+  //deleteStudent = new EventEmitter<Student>();
+
+  //@Output()
+  //editStudent = new EventEmitter<Student>();
+
+
+  ngOnDestroy(): void {
+    this.destroyed.next(true);
+  }
+
+  onCreateStudent(): void {
+    this.matDialog      
+      .open(StudentDialogComponent)
+      
+      .afterClosed()
+      
+      .subscribe({
+        next: (v) => {
+          if (v) {
+            this.studentService.createStudent({
+              firstNameStu: v.firstNameStu,
+              lastNameStu: v.lastNameStu,
+              telephoneStu: v.telephoneStu,
+              emailStu: v.emailStu,
+              courseStu: v.courseStu,
+            });
+          }
+        },
+      });
+  }
+
+  onDeleteStudent(studentToDelete:number): void {
+    if (confirm(`¿Está seguro de eliminar alumno?`)) {
+      this.studentService.deleteStudentById(studentToDelete);
+    }
+  }
+
+  onEditStudent(studentToEdit: number): void {
+    this.matDialog      
+      .open(StudentDialogComponent, {        
+        data: this.student,
+      })
+      
+      .afterClosed()
+      
+      .subscribe({
+        next: (studentUpdated) => {
+          if (studentUpdated) {
+            this.studentService.updateStudentById(studentToEdit, studentUpdated);
+          }
+        },
+      });
+  }
 }

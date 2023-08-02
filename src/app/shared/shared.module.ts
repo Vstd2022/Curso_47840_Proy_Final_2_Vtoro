@@ -2,27 +2,31 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StudentDialogComponent } from './components/student-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { StudentsComponent } from '../dashboard/Pages/students/students.component';
 import { RouterModule, Router } from '@angular/router';
 import { commonmaterialModule } from './modules/common-material.module';
 import { ResaltadoDirective } from '../dashboard/Pages/students/resaltado.directive';
-//import { CoursesComponent } from '../dashboard/Pages/courses/courses.component';
+import { MatCardModule } from '@angular/material/card';
+import { ControlErrorMessagePipe } from './pipes/control-error.pipe';
+import { CoursesDialogComponent } from './components/courses-form.component';
+import { ClassesDialogComponent } from './components/classes-form.component';
 
 @NgModule({
   declarations: [
     StudentDialogComponent,
-    StudentsComponent,     
-    ResaltadoDirective,   
+    ResaltadoDirective,
+    ControlErrorMessagePipe,
+    CoursesDialogComponent,
+    ClassesDialogComponent   
   ],
   imports: [
     CommonModule,    
     RouterModule,   
     ReactiveFormsModule,
-    commonmaterialModule
+    commonmaterialModule, 
+    MatCardModule 
   ],
   exports: [
-    StudentDialogComponent,
-    StudentsComponent
+    StudentDialogComponent,  
   ]
 
 })

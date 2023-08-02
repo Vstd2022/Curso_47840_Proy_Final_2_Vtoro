@@ -1,13 +1,18 @@
-//export class Courses{
-    //constructor(
-     //   public id: number,
-     //   public NameCourse: string,
-     //   public stateCourse: string,        
-    //){}
-//}
-
 export interface Courses {
-    id: number;
-    NameCourse: string;
-    stateCourse: string;   
+    id_cour: number;
+    nameCourse: string;    
+    campusCourse:string;  
+    stateCourse: string; 
   }
+
+export interface CreateCoursesData {
+    nameCourse: string;    
+    campusCourse:string;  
+    stateCourse: string; 
+ }
+ 
+ export interface UpdateCoursesData {
+    nameCourse?: string;
+    campusCourse?: string;
+    stateCourse?: string;  
+ }

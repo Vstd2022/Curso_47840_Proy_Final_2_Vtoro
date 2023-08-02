@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  showFiller = false;
+
+  showPage = true;
 
 }
