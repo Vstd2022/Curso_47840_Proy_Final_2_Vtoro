@@ -1,0 +1,21 @@
+{
+  "student": [
+    {
+      "id_Stu": 100,
+      "firstNameStu": "María",
+      "lastNameStu": "López",
+      "telephoneStu": "8500622",
+      "emailStu": "mlopez@gmail.com",
+      "courseStu": "Ingeniería"
+    },
+    {
+      "id_Stu": 200,
+      "firstNameStu": "Jose",
+      "lastNameStu": "Santana",
+      "telephoneStu": "7645457",
+      "emailStu": "jsantana@gmail.com",
+      "courseStu": "Medicina"
+    }
+  ],
+  "class": []
+}

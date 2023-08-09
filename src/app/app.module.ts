@@ -1,11 +1,13 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { ConverterPipe } from './dashboard/Pages/students/converter.pipe';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ConverterPipe } from './dashboard/Pages/students/converter.pipe';
-
+import { MatCardModule } from '@angular/material/card';
+import { registerLocaleData } from '@angular/common';
+import eslocale from '@angular/common/locales/es-AR'
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -17,7 +19,9 @@ import { ConverterPipe } from './dashboard/Pages/students/converter.pipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,     
+    BrowserAnimationsModule,  
+    HttpClientModule,    
+    MatCardModule,    
   ],
   providers: [],
   bootstrap: [AppComponent]

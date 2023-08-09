@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 
 @Component({
@@ -10,3 +11,4 @@ import { CommonModule } from '@angular/common';
 export class AccessComponent {
 
 }
+

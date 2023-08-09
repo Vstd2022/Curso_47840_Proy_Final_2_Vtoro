@@ -8,6 +8,13 @@ import { HomeComponent } from "./Pages/home/home.component";
 @NgModule({
     imports: [
       RouterModule.forChild([
+
+        //{
+        //  // /dashboard/home
+        //  path: 'home',
+        //  component: HomeComponent,
+        //},
+
         {
             path: 'home',
             loadChildren: () => import('./Pages/home/home.module').then((m) => m.HomeModule),
