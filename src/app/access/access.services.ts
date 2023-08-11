@@ -40,7 +40,7 @@ export class AccessService {
       }
     }).subscribe({
       next: (response) => {
-        if (response.length) {
+          if (response.length) {
           const accessUser = response[0];
           // LOGIN VALIDO
           this._accessUser$.next(accessUser);
@@ -48,8 +48,6 @@ export class AccessService {
 
           // ESTA EJECUTANDO ESTA LINEA
           this.router.navigate(['/dashboard']);
-
-
 
 
           localStorage.setItem('token', accessUser.token);
@@ -62,7 +60,7 @@ export class AccessService {
       error: (err) => {
 
         if (err instanceof HttpErrorResponse) {
-          let message = 'Ocurrio un error inespeado';
+          let message = 'Ocurrio un error inesperado';
           if (err.status === 500) {
           }
           if (err.status === 401) {

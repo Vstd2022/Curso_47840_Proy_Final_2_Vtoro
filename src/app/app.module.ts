@@ -9,7 +9,7 @@ import { registerLocaleData } from '@angular/common';
 import eslocale from '@angular/common/locales/es-AR'
 import { HttpClientModule } from '@angular/common/http';
 
-
+registerLocaleData(eslocale);
 
 @NgModule({
   declarations: [
@@ -23,7 +23,12 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,    
     MatCardModule,    
   ],
-  providers: [],
+  providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'es-AR'
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

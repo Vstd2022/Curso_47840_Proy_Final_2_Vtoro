@@ -1,4 +1,4 @@
-import { Component,OnDestroy, EventEmitter, Input, Output } from '@angular/core';
+import { Component,OnDestroy, EventEmitter, Input, Output,Inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Student } from 'src/app/structdata/datastudents.model';
 import { MatDialog} from '@angular/material/dialog';
@@ -14,11 +14,13 @@ import { StudentService } from './students.service';
 
 export class StudentsComponent implements OnDestroy {
   public student: Observable<Student[]>;
+  public isLoading$: Observable<boolean>;
   public destroyed = new Subject<boolean>();
 
   public loading = false;
   constructor(private matDialog: MatDialog, private studentService: StudentService) {
     this.studentService.loadStudent();
+    this.isLoading$ = this.studentService.isLoading$;
     this.student = this.studentService.getStudent();
   }
 
@@ -59,13 +61,13 @@ export class StudentsComponent implements OnDestroy {
       });
   }
 
-  onDeleteStudent(studentToDelete:number): void {
-    if (confirm(`¿Está seguro de eliminar alumno?`)) {
-      this.studentService.deleteStudentById(studentToDelete);
+  onDeleteStudent(studentToDelete:Student): void {
+    if (confirm(`¿Está seguro de eliminar a ${studentToDelete.firstNameStu}?`)) {
+      this.studentService.deleteStudentById(studentToDelete.id_Stu);
     }
   }
 
-  onEditStudent(studentToEdit: number): void {
+  onEditStudent(studentToEdit: Student): void {
     this.matDialog      
       .open(StudentDialogComponent, {        
         data: this.student,
@@ -76,7 +78,7 @@ export class StudentsComponent implements OnDestroy {
       .subscribe({
         next: (studentUpdated) => {
           if (studentUpdated) {
-            this.studentService.updateStudentById(studentToEdit, studentUpdated);
+            this.studentService.updateStudentById(studentToEdit.id_Stu, studentUpdated);
           }
         },
       });

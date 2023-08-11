@@ -6,11 +6,14 @@ import { UserService } from './user.service';
 import { UserMockService } from './mocks/user-mock.service';
 import { RouterModule } from '@angular/router';
 import { UsersRoutingModule } from './users-routing.module';
+import { UserDetailComponent } from './pages/user-detail.component';
+
 
 @NgModule({
   declarations: [
     UsersComponent, 
   ],
+
   imports: [CommonModule, SharedModule, RouterModule, UsersRoutingModule],
   exports: [UsersComponent],
   providers: [

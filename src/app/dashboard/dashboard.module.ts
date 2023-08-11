@@ -33,7 +33,7 @@ import { HomeModule } from './Pages/home/home.module';
     StudentsModule,
     CoursesModule,
     ClassesModule,
-    HomeModule    
+    HomeModule   
   ],
   exports:[
     DashboardComponent

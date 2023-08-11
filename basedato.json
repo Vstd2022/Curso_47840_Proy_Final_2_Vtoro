@@ -17,5 +17,23 @@
       "courseStu": "Medicina"
     }
   ],
+  "users": [
+    {
+      "name": "Josue",
+      "surname": "Baez",
+      "email": "usuario@mail.com",
+      "password": "123456",
+      "token": "bG1Ptx4ZztwJwAoyjxQy",
+      "id": 1
+    },
+    {
+      "name": "test",
+      "email": "test@mail.com",
+      "password": "123456",
+      "surname": "test",
+      "token": "aG1Ptx4ZBtwJCAoyjxQy",
+      "id": 2
+    }
+  ],
   "class": []
 }

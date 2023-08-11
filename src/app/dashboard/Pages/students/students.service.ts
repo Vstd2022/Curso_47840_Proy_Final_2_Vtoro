@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Student,CreateStudentData,UpdateStudentData} from 'src/app/structdata/datastudents.model';
 import { BehaviorSubject, Observable, Subject, delay, map, mergeMap, of, take } from 'rxjs';
 import { NotifierService } from 'src/app/core/services/notifier.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders  } from '@angular/common/http';
+import { generateRandomString } from 'src/app/shared/utils/helpers';
+import { environment } from 'src/environments/environments';
+
 
 //const STUDENT_DB: Observable<Student[]> = of([
 //  {
@@ -37,6 +40,8 @@ import { HttpClient } from '@angular/common/http';
 export class StudentService {
   private _student$ = new BehaviorSubject<Student[]>([]);
   private student$ = this._student$.asObservable();
+  private _isLoading$ = new BehaviorSubject(false);
+  public isLoading$ = this._isLoading$.asObservable();
 
   constructor(private notifier: NotifierService, private httpclient: HttpClient) {}
 
@@ -44,14 +49,24 @@ export class StudentService {
     //STUDENT_DB.subscribe({
     //  next: (studentsFromDb) => this._student$.next(studentsFromDb),
     //});
-    this.httpclient.get<Student[]>('http://localhost:3000/student').subscribe({
-      next: (response) => {
-        console.log('RESPONSE:', response)
+    this._isLoading$.next(true);
+    this.httpclient.get<Student[]>(environment.baseApiUrl + '/student', {
+      headers: new HttpHeaders({
+        'token': '12345678910'
+      }),     
+    }).subscribe({
+      next: (response) => {        
         this._student$.next(response);
-      }
-    } )
-  }
+      },
+      error: () => {        
+        this.notifier.showError('Error al cargar los alumnos');
+      },
+      complete: () => {
+        this._isLoading$.next(false); 
+      },
+    })
 
+  }
   getStudent(): Observable<Student[]> {
     return this.student$;
   }
@@ -62,46 +77,42 @@ export class StudentService {
       map(( student ) =>  student.find((s) => s.id_Stu === id_Stu)),
     )
   }
-  createStudent(student: CreateStudentData): void {
+  createStudent(payload: CreateStudentData): void {
     
-   // this.student$.pipe(take(1)).subscribe({
-   //   next: (arrayActual) => {
-   //     this._student$.next([
-   //       ...arrayActual,
-   //       { ...student, id_Stu: arrayActual.length + 1 },
-   //     ]);
-  //      this.notifier.showSuccess('Alumno creado');
-   //   },
-   // });
+ 
+   const token = generateRandomString(20);
 
-    this.httpclient.post<Student>('http://localhost:3000/student',student).subscribe({
-      next: (studentCreate) => {
-        
-        this.student$.pipe(take(1)).subscribe(
-          {
-            next: (arrayActual) => {
-              this._student$.next([...arrayActual,studentCreate])
-            }
-          }
-        )
-      }
-    }
-
-    )
-
-  }
+   this.httpclient.post<Student>(environment.baseApiUrl  + '/student', { ...payload, token })   
+     .pipe(
+       mergeMap((userCreate) => this.student$.pipe(
+         take(1),
+         map(
+           (arrayActual) => [...arrayActual, userCreate])
+         )
+       )
+     )
+     .subscribe({
+       next: (arrayActualizado) => {
+         this._student$.next(arrayActualizado);
+       }
+     })
+ }
 
   updateStudentById(id_Stu: number, alumnoActualizado: UpdateStudentData): void {
-    this.student$.pipe(take(1)).subscribe({
-      next: (arrayActual) => {
-        this._student$.next(
-          arrayActual.map((s) =>
-            s.id_Stu === id_Stu ? { ...s, ...alumnoActualizado } : s
-          )
-        );
-        this.notifier.showSuccess('Alumno Actualizado');
-      },
-    });
+    //this.student$.pipe(take(1)).subscribe({
+    //  next: (arrayActual) => {
+    //    this._student$.next(
+    //      arrayActual.map((s) =>
+    //        s.id_Stu === id_Stu ? { ...s, ...alumnoActualizado } : s
+    //      )
+    //    );
+    //    this.notifier.showSuccess('Alumno Actualizado');
+    //  },
+    //});
+
+    this.httpclient.put(environment.baseApiUrl + '/student/' + id_Stu, alumnoActualizado).subscribe({
+      next: () => this.loadStudent(),
+    })
   }
   
   deleteStudentById(id_Stu: number): void {
@@ -112,20 +123,10 @@ export class StudentService {
    //   },
    // });
 
- 
-   this.httpclient.delete('http://localhost:3000/student/' + id_Stu)
-   .pipe(
-    mergeMap(
-      (respondeStudentDelete) => this.student$.pipe(
-        take(1),
-        map((arrayActual) => arrayActual.filter((s) => s.id_Stu !== id_Stu))
-    )
-   )
-   ).subscribe(
-    {
-      next: (arrayActualizado) => this._student$.next(arrayActualizado),
-        }  )
-   
-     
-    }
+   this.httpclient.delete(environment.baseApiUrl + '/student/' + id_Stu)
+   .pipe().subscribe({
+     next: () => this.loadStudent(),
+   })
+
+}  
   }
