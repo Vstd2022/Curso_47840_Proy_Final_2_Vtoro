@@ -9,6 +9,10 @@ import { RouterModule } from '@angular/router';
 import { CoursesService } from './courses.service';
 import { CoursesDialogComponent } from 'src/app/shared/components/courses-form.component';
 import { Courses } from 'src/app/structdata/datacourses.model';
+import { EffectsModule } from '@ngrx/effects';
+import { CoursesEffects } from './store/courses.effects';
+import { StoreModule } from '@ngrx/store';
+import { coursesFeature } from './store/courses.reducer';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,9 @@ import { Courses } from 'src/app/structdata/datacourses.model';
     SharedModule,
     CoursesRoutingModule,
     commonmaterialModule,
-    RouterModule,
+    RouterModule,    
+    StoreModule.forFeature(coursesFeature),
+    EffectsModule.forFeature([CoursesEffects])
   ],
   exports: [CoursesComponent],
   providers: [   

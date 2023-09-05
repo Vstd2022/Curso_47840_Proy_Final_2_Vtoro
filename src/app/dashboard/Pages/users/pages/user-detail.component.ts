@@ -4,7 +4,6 @@ import { User } from '../models';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { UserService } from '../user.service';
 
-
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',

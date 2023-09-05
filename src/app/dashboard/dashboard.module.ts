@@ -12,6 +12,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { StudentsModule } from './Pages/students/students.module';
 import { CoursesModule } from './Pages/courses/courses.module';
 import { ClassesModule } from './Pages/classes/classes.module';
+import { UsersModule } from './Pages/users/users.module';
 import { HomeModule } from './Pages/home/home.module';
 
 
@@ -33,7 +34,8 @@ import { HomeModule } from './Pages/home/home.module';
     StudentsModule,
     CoursesModule,
     ClassesModule,
-    HomeModule   
+    HomeModule ,
+    UsersModule  
   ],
   exports:[
     DashboardComponent

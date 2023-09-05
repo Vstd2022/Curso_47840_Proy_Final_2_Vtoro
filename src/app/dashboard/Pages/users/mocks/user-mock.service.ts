@@ -8,6 +8,7 @@ export class UserMockService {
       surname: 'Ape Usuario',
       email: 'usuario@mail.com',
       password: '123456',
+      role: 'ADMINISTRADOR',
       token: ''
     },
   ];

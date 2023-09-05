@@ -26,7 +26,7 @@ export class UserService {
     this._isLoading$.next(true);
     this.httpClient.get<User[]>(environment.baseApiUrl + '/users', {
       headers: new HttpHeaders({
-        'token': '123456789'
+        'token': '12345678910'
       }),
       // params: {
       //   page: 1,
@@ -143,7 +143,10 @@ export class UserService {
         //   )
         // )
       ).subscribe({
+        // TODO OK
         next: (arrayActualizado) => this.loadUsers(),
+        error: (err) => this.notifier.showError('OCURRIO UN ERROR'),
+        complete: () => {}
       })
 
     // OBSERVABLE 2

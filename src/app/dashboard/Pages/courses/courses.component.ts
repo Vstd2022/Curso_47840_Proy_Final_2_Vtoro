@@ -4,7 +4,8 @@ import { Courses } from 'src/app/structdata/datacourses.model';
 import { MatDialog} from '@angular/material/dialog';
 import { CoursesDialogComponent } from 'src/app/shared/components/courses-form.component';
 import { CoursesService } from './courses.service';
-
+import { Store } from '@ngrx/store';
+import { selectIsAdmin } from 'src/app/store/auth/auth.selectors';
 
 @Component({
   selector: 'app-courses',
@@ -17,9 +18,13 @@ export class CoursesComponent implements OnDestroy {
   public destroyed = new Subject<boolean>();
 
   public loading = false;
-  constructor(private matDialog: MatDialog, private coursesService: CoursesService) {
+
+  public isAdminCour$: Observable<boolean>;
+
+  constructor(private matDialog: MatDialog, private coursesService: CoursesService, private store: Store) {
     this.coursesService.loadCourses();
     this.courses = this.coursesService.getCourses();
+    this.isAdminCour$ = this.store.select(selectIsAdmin);
   }
 
   displayedColumns: string[] = ['id_cour', 'nameCourse', 'campusCourse', 'stateCourse','edit','delete'];

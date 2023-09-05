@@ -6,16 +6,23 @@ import { NotifierService } from "../core/services/notifier.service";
 import { Router } from "@angular/router";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { environment } from "src/environments/environments";
+import { Store } from "@ngrx/store";
+import { AuthActions } from "../store/auth/auth.actions";
+import { selectAuthUser } from "../store/auth/auth.selectors";
+
+
 
 @Injectable({ providedIn: 'root' })
 export class AccessService {
-  private _accessUser$ = new BehaviorSubject<User | null>(null);
-  public accessUser$ = this._accessUser$.asObservable();
+  //private _accessUser$ = new BehaviorSubject<User | null>(null);
+  //public accessUser$ = this._accessUser$.asObservable();
+  public authUser$ = this.store.select(selectAuthUser);
 
   constructor(
     private notifier: NotifierService,
     private router: Router,
     private httpClient: HttpClient,
+    private store: Store,
   ) {}
 
 
@@ -26,6 +33,12 @@ export class AccessService {
       }
     }).pipe(
       map((accessResult) => {
+        if (accessResult.length) {
+          const authUser = accessResult[0];
+          // LOGIN VALIDO
+          // this._authUser$.next(authUser);
+          this.store.dispatch(AuthActions.setAuthUser({ payload: authUser }));
+        }
         return !!accessResult.length
       })
     )
@@ -43,8 +56,9 @@ export class AccessService {
           if (response.length) {
           const accessUser = response[0];
           // LOGIN VALIDO
-          this._accessUser$.next(accessUser);
-
+          //this._accessUser$.next(accessUser);
+          this.store.dispatch(AuthActions.setAuthUser({ payload: accessUser }));
+  
 
           // ESTA EJECUTANDO ESTA LINEA
           this.router.navigate(['/dashboard']);
@@ -54,7 +68,8 @@ export class AccessService {
         } else {
           // LOGIN INVALIDO
           this.notifier.showError('Email o contrasena invalida');
-          this._accessUser$.next(null);
+          //this._accessUser$.next(null);
+          this.store.dispatch(AuthActions.setAuthUser({ payload: null }));
         }
       },
       error: (err) => {
@@ -72,5 +87,8 @@ export class AccessService {
     })
 
     
+  }
+  public logout(): void {
+    this.store.dispatch(AuthActions.setAuthUser({ payload: null }))
   }
 }

@@ -24,6 +24,7 @@
       "email": "usuario@mail.com",
       "password": "123456",
       "token": "bG1Ptx4ZztwJwAoyjxQy",
+      "role": "ADMINISTRADOR",
       "id": 1
     },
     {
@@ -32,6 +33,7 @@
       "password": "123456",
       "surname": "test",
       "token": "aG1Ptx4ZBtwJCAoyjxQy",
+      "role": "USUARIO",
       "id": 2
     }
   ],

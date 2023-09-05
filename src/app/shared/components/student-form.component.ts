@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup,Validators,FormBuilder  } from '@angular/forms';
-import { DialogRef } from '@angular/cdk/dialog';
 import { MAT_DIALOG_DATA,MatDialogRef  }from '@angular/material/dialog';
-import { Student } from 'src/app/structdata/datastudents.model';
+import { Student } from 'src/app/structdata/datastudents';
+import { noHomeroValidator } from '../utils/form-validators';
 
 
 
@@ -13,7 +13,13 @@ import { Student } from 'src/app/structdata/datastudents.model';
 })
 export class StudentDialogComponent {
 
-editingStudent?: Student;
+  editingStudent?: Student;
+  nameControl = new FormControl<string | null>(null, [
+    Validators.required,
+    Validators.minLength(2),
+    noHomeroValidator(),
+  ]);
+
   firstNameStuControl = new FormControl<string | null>(null, [Validators.required,Validators.minLength(1),]);
   lastNameStuControl = new FormControl<string | null>(null, [Validators.required,Validators.minLength(1)]);
   telephoneStuControl = new FormControl<string | null>(null, [Validators.required]);
@@ -33,8 +39,9 @@ editingStudent?: Student;
     private dialogRef: MatDialogRef<StudentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data?: Student
   ) {   
+    
     if (this.data) {
-      this.editingStudent = this.data;
+      this.editingStudent = this.data;          
       this.firstNameStuControl.setValue(this.data.firstNameStu);
       this.lastNameStuControl.setValue(this.data.lastNameStu);
       this.telephoneStuControl.setValue(this.data.telephoneStu);
@@ -47,7 +54,12 @@ editingStudent?: Student;
     if (this.studentForm.invalid) {
       this.studentForm.markAllAsTouched();
     } else {
-      this.dialogRef.close(this.studentForm.value);
+      const payload: any = {
+        ...this.studentForm.value
+      }
+     
+
+      this.dialogRef.close(payload);
     }
   }
 }

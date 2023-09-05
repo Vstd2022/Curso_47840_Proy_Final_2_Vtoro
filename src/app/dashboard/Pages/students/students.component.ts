@@ -4,6 +4,8 @@ import { Student } from 'src/app/structdata/datastudents.model';
 import { MatDialog} from '@angular/material/dialog';
 import { StudentDialogComponent } from 'src/app/shared/components/student-form.component';
 import { StudentService } from './students.service';
+import { Store } from '@ngrx/store';
+import { selectIsAdmin } from 'src/app/store/auth/auth.selectors';
 
 
 @Component({
@@ -18,10 +20,14 @@ export class StudentsComponent implements OnDestroy {
   public destroyed = new Subject<boolean>();
 
   public loading = false;
-  constructor(private matDialog: MatDialog, private studentService: StudentService) {
+
+  public isAdmin$: Observable<boolean>;
+
+  constructor(private matDialog: MatDialog, private studentService: StudentService, private store: Store) {
     this.studentService.loadStudent();
     this.isLoading$ = this.studentService.isLoading$;
     this.student = this.studentService.getStudent();
+    this.isAdmin$ = this.store.select(selectIsAdmin);    
   }
 
   displayedColumns: string[] = ['id_Stu', 'firstNameStu', 'lastNameStu', 'telephoneStu','emailStu','courseStu','edit','delete'];
@@ -34,6 +40,8 @@ export class StudentsComponent implements OnDestroy {
 
   //@Output()
   //editStudent = new EventEmitter<Student>();
+
+
 
 
   ngOnDestroy(): void {

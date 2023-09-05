@@ -20,7 +20,7 @@ import { UserDetailComponent } from './pages/user-detail.component';
       {
         // /dashboard/users/:id
         path: ':id',
-        //component: UserDetailComponent,
+        component: UserDetailComponent,
       },
       // {
       //   path: 'some-module',

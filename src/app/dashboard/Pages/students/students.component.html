@@ -1,6 +1,6 @@
 
-  <button (click)="onCreateStudent()" mat-flat-button color="primary" type="button">          
-       Agregar Alumno
+  <button [disabled]="!(isAdmin$ | async)" (click)="onCreateStudent()" mat-flat-button color="primary" type="button">          
+       Crea Alumnos
   </button>
     
      <div>     
@@ -35,7 +35,7 @@
             <ng-container matColumnDef="edit">
                 <th mat-header-cell *matHeaderCellDef > Editar </th>
                 <td mat-cell *matCellDef="let student"> 
-                    <button (click)="onEditStudent(student.id_Stu)" mat-icon-button color="primary">
+                    <button [disabled]="!(isAdmin$ | async)" (click)="onEditStudent(student.id_Stu)" mat-icon-button color="primary">
                         <mat-icon>edit</mat-icon> 
                     </button> 
                 </td>
@@ -43,7 +43,7 @@
             <ng-container matColumnDef="delete">
                 <th mat-header-cell *matHeaderCellDef> Eliminar </th>
                 <td mat-cell *matCellDef="let student"> 
-                    <button (click)="onDeleteStudent(student.id_Stu)" mat-icon-button color="warn">
+                    <button [disabled]="!(isAdmin$ | async)" (click)="onDeleteStudent(student.id_Stu)" mat-icon-button color="warn">
                         <mat-icon>delete</mat-icon> 
                     </button> 
                 </td>
